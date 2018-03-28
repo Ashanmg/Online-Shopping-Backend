@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OS.Web", "OS.Web\OS.Web.csproj", "{CE83DAE9-862B-407A-ADFB-E593E9F5EE5F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OS.Entities", "..\OS.Entities\OS.Entities.csproj", "{1DFDA3F0-9303-4B4D-9FDB-597F1BC6BBAC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OS.Entities", "OS.Entities\OS.Entities.csproj", "{1DFDA3F0-9303-4B4D-9FDB-597F1BC6BBAC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OS.Infastructures", "OS.Infastructures\OS.Infastructures.csproj", "{961945FA-D958-4CE6-BECC-0385C664A3B2}"
 EndProject
