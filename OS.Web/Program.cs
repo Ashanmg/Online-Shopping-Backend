@@ -12,6 +12,7 @@ namespace onllineshopping_backend
 {
     public class Program
     {
+        // Entry point for the application.
         public static void Main(string[] args)
         {
             BuildWebHost(args).Run();
@@ -20,6 +21,8 @@ namespace onllineshopping_backend
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseDefaultServiceProvider(options =>
+                    options.ValidateScopes = false)
                 .Build();
     }
 }
