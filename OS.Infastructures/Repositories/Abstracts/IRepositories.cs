@@ -1,0 +1,26 @@
+﻿using OS.Entities;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace OS.Infastructures.Repositories.Abstracts
+{
+    public interface IAccountUserRepository : IEntityBaseRepository<AccountUser> { }
+    public interface IAccountUserRoleRepository : IEntityBaseRepository<AccountUserRole> { }
+    public interface IAddressRepository : IEntityBaseRepository<Address> { }
+    public interface IManufacturerRepository : IEntityBaseRepository<Manufacturer> { }
+    public interface IOrderRepository : IEntityBaseRepository<Order> { }
+    public interface IOrderItemRepository : IEntityBaseRepository<OrderItem> { }
+    public interface IOrderNoteRepository : IEntityBaseRepository<OrderNote> { }
+    public interface IPictureRepository : IEntityBaseRepository<Picture> { }
+    public interface IProductRepository : IEntityBaseRepository<Product> { }
+    public interface IProduct_ProductAttributeMappingRepository : IEntityBaseRepository<Product_ProductAttributeMapping> { }
+    public interface IProductAttributeRepository : IEntityBaseRepository<ProductAttribute> { }
+    public interface IProductAttributeCombinationRepository : IEntityBaseRepository<ProductAttributeCombination> { }
+    public interface IProductReviewRepository : IEntityBaseRepository<ProductReview> { }
+    public interface IProductTypeRepository : IEntityBaseRepository<ProductType> { }
+    public interface IRoleRepository : IEntityBaseRepository<Role> { }
+    public interface IShoppingCartItemRepository : IEntityBaseRepository<ShoppingCartItem> { }
+    public interface IStockItemMappingRepository : IEntityBaseRepository<StockItemMapping> { }
+    public interface IStoreRepository : IEntityBaseRepository<Store> { }
+}
