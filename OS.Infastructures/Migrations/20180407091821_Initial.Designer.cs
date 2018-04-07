@@ -11,7 +11,7 @@ using System;
 namespace OS.Infastructures.Migrations
 {
     [DbContext(typeof(OnlineShoppingDbContext))]
-    [Migration("20180407070748_Initial")]
+    [Migration("20180407091821_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -63,7 +63,7 @@ namespace OS.Infastructures.Migrations
 
                     b.Property<int?>("ShoppingCartItemId");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(150);
 

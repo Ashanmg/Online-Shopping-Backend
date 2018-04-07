@@ -41,10 +41,10 @@ namespace OS.Services.Serivices
             var user = _accountUserRepository.GetSingleByUsername(username);
             if (user != null && isUserValid(user, password))
             {
-                var userRoles = GetUserRoles(user.UserName);
+                var userRoles = GetUserRoles(user.Username);
                 membershipContext.User = user;
 
-                var identity = new GenericIdentity(user.UserName);
+                var identity = new GenericIdentity(user.Username);
                 membershipContext.Principal = new GenericPrincipal(
                     identity,
                     userRoles.Select(x => x.Name).ToArray());

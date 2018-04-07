@@ -311,7 +311,7 @@ namespace OS.Infastructures.Migrations
                     PasswordSult = table.Column<string>(maxLength: 15, nullable: false),
                     ProductReviewId = table.Column<int>(nullable: true),
                     ShoppingCartItemId = table.Column<int>(nullable: true),
-                    UserName = table.Column<string>(maxLength: 150, nullable: false)
+                    Username = table.Column<string>(maxLength: 150, nullable: false)
                 },
                 constraints: table =>
                 {

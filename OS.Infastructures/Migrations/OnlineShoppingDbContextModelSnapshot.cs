@@ -62,7 +62,7 @@ namespace OS.Infastructures.Migrations
 
                     b.Property<int?>("ShoppingCartItemId");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(150);
 

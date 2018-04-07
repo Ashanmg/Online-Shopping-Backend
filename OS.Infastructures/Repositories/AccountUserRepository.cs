@@ -17,13 +17,13 @@ namespace OS.Infastructures.Repositories
 
         public AccountUser GetSingleByUsername(string username)
         {
-            return this.GetSingle(x => x.UserName == username);
+            return this.GetSingle(x => x.Username == username);
         }
 
         public IEnumerable<Role> GetUserRoles(string username)
         {
             List<Role> _roles = null;
-            AccountUser _user = this.GetSingle(u => u.UserName == username, u => u.AccountUserRoles);
+            AccountUser _user = this.GetSingle(u => u.Username == username, u => u.AccountUserRoles);
             if (_user != null)
             {
                 _roles = new List<Role>();
