@@ -36,7 +36,7 @@ namespace OS.Infastructures.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CreatedOnUTC = table.Column<DateTime>(nullable: false),
                     DisplayToCustomer = table.Column<int>(nullable: false),
-                    Note = table.Column<string>(nullable: true),
+                    Note = table.Column<string>(maxLength: 50, nullable: true),
                     OrderId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -67,8 +67,8 @@ namespace OS.Infastructures.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Description = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true)
+                    Description = table.Column<string>(maxLength: 150, nullable: true),
+                    Name = table.Column<string>(maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -81,7 +81,7 @@ namespace OS.Infastructures.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AttributeXml = table.Column<string>(nullable: true),
+                    AttributeXml = table.Column<string>(maxLength: 2147483647, nullable: true),
                     AvailableQuentity = table.Column<int>(nullable: false),
                     ProductId = table.Column<int>(nullable: false)
                 },
@@ -101,7 +101,7 @@ namespace OS.Infastructures.Migrations
                     IsApproved = table.Column<int>(nullable: false),
                     ProductId = table.Column<int>(nullable: false),
                     Rating = table.Column<int>(nullable: false),
-                    ReviewText = table.Column<string>(nullable: true)
+                    ReviewText = table.Column<string>(maxLength: 300, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -116,8 +116,8 @@ namespace OS.Infastructures.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Active = table.Column<int>(nullable: false),
                     FreeShipping = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    SystemName = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    SystemName = table.Column<string>(maxLength: 100, nullable: true),
                     TaxEnabled = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -132,7 +132,7 @@ namespace OS.Infastructures.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AccountUserId = table.Column<int>(nullable: false),
-                    AttributeXml = table.Column<string>(nullable: true),
+                    AttributeXml = table.Column<string>(maxLength: 2147483647, nullable: true),
                     CreatedOnUTC = table.Column<DateTime>(nullable: false),
                     ProductId = table.Column<int>(nullable: false),
                     ProductPrice = table.Column<decimal>(nullable: false),
@@ -217,8 +217,8 @@ namespace OS.Infastructures.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Active = table.Column<int>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(maxLength: 200, nullable: true),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
                     PerentProductTypeId = table.Column<int>(nullable: false),
                     PictureId = table.Column<int>(nullable: true),
                     UpdatedOnUTC = table.Column<DateTime>(nullable: false)
@@ -235,26 +235,6 @@ namespace OS.Infastructures.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AccountUserRole",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AccountUserId = table.Column<int>(nullable: false),
-                    RoleId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AccountUserRole", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AccountUserRole_Role_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Role",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Product",
                 columns: table => new
                 {
@@ -265,7 +245,7 @@ namespace OS.Infastructures.Migrations
                     ApprovedTotalReview = table.Column<int>(nullable: false),
                     CreatedOnUTC = table.Column<DateTime>(nullable: false),
                     ManufacturerId = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
                     OrderItemId = table.Column<int>(nullable: true),
                     PictureId = table.Column<int>(nullable: true),
                     Price = table.Column<decimal>(nullable: false),
@@ -273,7 +253,7 @@ namespace OS.Infastructures.Migrations
                     ProductReviewId = table.Column<int>(nullable: true),
                     ProductTypeId = table.Column<int>(nullable: false),
                     ShoppingCartItemId = table.Column<int>(nullable: true),
-                    ShortDescription = table.Column<string>(nullable: true),
+                    ShortDescription = table.Column<string>(maxLength: 150, nullable: true),
                     ShowOnCategoryPage = table.Column<int>(nullable: false),
                     TaxIncluded = table.Column<int>(nullable: false)
                 },
@@ -320,18 +300,18 @@ namespace OS.Infastructures.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Active = table.Column<int>(nullable: false),
                     BillingAddressId = table.Column<int>(nullable: false),
-                    ContactNumber = table.Column<int>(nullable: false),
+                    ContactNumber = table.Column<int>(maxLength: 10, nullable: false),
                     CreatedByUTC = table.Column<DateTime>(nullable: false),
-                    EmailAddress = table.Column<string>(nullable: true),
-                    FirstName = table.Column<string>(nullable: true),
+                    EmailAddress = table.Column<string>(maxLength: 150, nullable: false),
+                    FirstName = table.Column<string>(maxLength: 100, nullable: false),
                     LastLoginUTC = table.Column<DateTime>(nullable: false),
-                    LastName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(maxLength: 100, nullable: false),
                     OrderId = table.Column<int>(nullable: true),
-                    Password = table.Column<string>(nullable: true),
-                    PasswordSult = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(maxLength: 100, nullable: false),
+                    PasswordSult = table.Column<string>(maxLength: 15, nullable: false),
                     ProductReviewId = table.Column<int>(nullable: true),
                     ShoppingCartItemId = table.Column<int>(nullable: true),
-                    UserName = table.Column<string>(nullable: true)
+                    UserName = table.Column<string>(maxLength: 150, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -362,11 +342,11 @@ namespace OS.Infastructures.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AddressId = table.Column<int>(nullable: false),
                     CreatedOnUTC = table.Column<DateTime>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
                     OrderId = table.Column<int>(nullable: true),
                     ShoppingCartItemId = table.Column<int>(nullable: true),
-                    StoreAddress = table.Column<string>(nullable: true),
                     StoreContactNumber = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -393,8 +373,8 @@ namespace OS.Infastructures.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CreatedOnUTC = table.Column<DateTime>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(maxLength: 300, nullable: true),
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
                     ProductId = table.Column<int>(nullable: true),
                     UpdatedOnUTC = table.Column<DateTime>(nullable: false)
                 },
@@ -437,19 +417,46 @@ namespace OS.Infastructures.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AccountUserRole",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AccountUserId = table.Column<int>(nullable: false),
+                    RoleId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AccountUserRole", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AccountUserRole_AccountUser_AccountUserId",
+                        column: x => x.AccountUserId,
+                        principalTable: "AccountUser",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AccountUserRole_Role_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Role",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Address",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AccountUserId = table.Column<int>(nullable: true),
-                    Address1 = table.Column<string>(nullable: true),
-                    Address2 = table.Column<string>(nullable: true),
-                    City = table.Column<string>(nullable: true),
+                    Address1 = table.Column<string>(maxLength: 200, nullable: false),
+                    Address2 = table.Column<string>(maxLength: 200, nullable: true),
+                    City = table.Column<string>(maxLength: 50, nullable: false),
                     CountryId = table.Column<int>(nullable: false),
                     ModifiedOnUTC = table.Column<DateTime>(nullable: false),
                     OrderId = table.Column<int>(nullable: true),
-                    ZipPostalCode = table.Column<int>(nullable: false)
+                    StoreId = table.Column<int>(nullable: true),
+                    ZipPostalCode = table.Column<int>(maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -464,6 +471,12 @@ namespace OS.Infastructures.Migrations
                         name: "FK_Address_Order_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Order",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Address_Store_StoreId",
+                        column: x => x.StoreId,
+                        principalTable: "Store",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -510,6 +523,11 @@ namespace OS.Infastructures.Migrations
                 column: "ShoppingCartItemId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AccountUserRole_AccountUserId",
+                table: "AccountUserRole",
+                column: "AccountUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AccountUserRole_RoleId",
                 table: "AccountUserRole",
                 column: "RoleId");
@@ -523,6 +541,11 @@ namespace OS.Infastructures.Migrations
                 name: "IX_Address_OrderId",
                 table: "Address",
                 column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Address_StoreId",
+                table: "Address",
+                column: "StoreId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Manufacturer_ProductId",

@@ -11,8 +11,8 @@ using System;
 namespace OS.Infastructures.Migrations
 {
     [DbContext(typeof(OnlineShoppingDbContext))]
-    [Migration("20180405174942_InitialAttribute")]
-    partial class InitialAttribute
+    [Migration("20180407070748_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -88,6 +88,8 @@ namespace OS.Infastructures.Migrations
                     b.Property<int>("RoleId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AccountUserId");
 
                     b.HasIndex("RoleId");
 
@@ -579,6 +581,11 @@ namespace OS.Infastructures.Migrations
 
             modelBuilder.Entity("OS.Entities.AccountUserRole", b =>
                 {
+                    b.HasOne("OS.Entities.AccountUser")
+                        .WithMany("AccountUserRoles")
+                        .HasForeignKey("AccountUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("OS.Entities.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")

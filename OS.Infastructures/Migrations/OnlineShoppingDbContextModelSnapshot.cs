@@ -88,6 +88,8 @@ namespace OS.Infastructures.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AccountUserId");
+
                     b.HasIndex("RoleId");
 
                     b.ToTable("AccountUserRole");
@@ -578,6 +580,11 @@ namespace OS.Infastructures.Migrations
 
             modelBuilder.Entity("OS.Entities.AccountUserRole", b =>
                 {
+                    b.HasOne("OS.Entities.AccountUser")
+                        .WithMany("AccountUserRoles")
+                        .HasForeignKey("AccountUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("OS.Entities.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
