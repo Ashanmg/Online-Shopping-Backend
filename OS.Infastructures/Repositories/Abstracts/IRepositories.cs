@@ -5,7 +5,11 @@ using System.Text;
 
 namespace OS.Infastructures.Repositories.Abstracts
 {
-    public interface IAccountUserRepository : IEntityBaseRepository<AccountUser> { }
+    public interface IAccountUserRepository : IEntityBaseRepository<AccountUser>
+    {
+        AccountUser GetSingleByUsername(string username);
+        IEnumerable<Role> GetUserRoles(string username);
+    }
     public interface IAccountUserRoleRepository : IEntityBaseRepository<AccountUserRole> { }
     public interface IAddressRepository : IEntityBaseRepository<Address> { }
     public interface IManufacturerRepository : IEntityBaseRepository<Manufacturer> { }
