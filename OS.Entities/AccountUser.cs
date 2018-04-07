@@ -18,10 +18,12 @@ namespace OS.Entities
         public DateTime CreatedByUTC { get; set; }
         public DateTime LastLoginUTC { get; set; }
         public virtual ICollection<Address> Addresses { get; set; }
+        public virtual ICollection<AccountUserRole> AccountUserRoles { get; set; }
 
         public AccountUser()
         {
             Addresses = new List<Address>();
+            AccountUserRoles = new List<AccountUserRole>();
         }
     }
 }
