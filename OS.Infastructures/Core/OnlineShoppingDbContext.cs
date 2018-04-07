@@ -46,7 +46,7 @@ namespace OS.Infastructures.Core
             modelBuilder.Entity<AccountUser>().Property(p => p.FirstName).IsRequired().HasMaxLength(100);
             modelBuilder.Entity<AccountUser>().Property(p => p.LastName).IsRequired().HasMaxLength(100);
             modelBuilder.Entity<AccountUser>().Property(p => p.EmailAddress).IsRequired().HasMaxLength(150);
-            modelBuilder.Entity<AccountUser>().Property(p => p.UserName).IsRequired().HasMaxLength(150);
+            modelBuilder.Entity<AccountUser>().Property(p => p.Username).IsRequired().HasMaxLength(150);
             modelBuilder.Entity<AccountUser>().Property(p => p.Password).IsRequired().HasMaxLength(100);
             modelBuilder.Entity<AccountUser>().Property(p => p.PasswordSult).IsRequired().HasMaxLength(15);
             modelBuilder.Entity<AccountUser>().Property(p => p.ContactNumber).HasMaxLength(10);

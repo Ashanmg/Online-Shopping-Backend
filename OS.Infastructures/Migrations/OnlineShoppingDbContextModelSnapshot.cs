@@ -62,7 +62,7 @@ namespace OS.Infastructures.Migrations
 
                     b.Property<int?>("ShoppingCartItemId");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(150);
 
@@ -87,6 +87,8 @@ namespace OS.Infastructures.Migrations
                     b.Property<int>("RoleId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AccountUserId");
 
                     b.HasIndex("RoleId");
 
@@ -578,6 +580,11 @@ namespace OS.Infastructures.Migrations
 
             modelBuilder.Entity("OS.Entities.AccountUserRole", b =>
                 {
+                    b.HasOne("OS.Entities.AccountUser")
+                        .WithMany("AccountUserRoles")
+                        .HasForeignKey("AccountUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("OS.Entities.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")

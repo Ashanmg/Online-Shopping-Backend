@@ -10,7 +10,7 @@ namespace OS.Entities
         public string LastName { get; set; }
         public string EmailAddress { get; set; }
         public int ContactNumber { get; set; }
-        public string UserName { get; set; }
+        public string Username { get; set; }
         public string Password { get; set; }
         public string PasswordSult { get; set; }
         public int BillingAddressId { get; set; }
@@ -18,10 +18,12 @@ namespace OS.Entities
         public DateTime CreatedByUTC { get; set; }
         public DateTime LastLoginUTC { get; set; }
         public virtual ICollection<Address> Addresses { get; set; }
+        public virtual ICollection<AccountUserRole> AccountUserRoles { get; set; }
 
         public AccountUser()
         {
             Addresses = new List<Address>();
+            AccountUserRoles = new List<AccountUserRole>();
         }
     }
 }
