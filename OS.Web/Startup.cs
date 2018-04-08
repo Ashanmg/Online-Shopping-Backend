@@ -11,6 +11,10 @@ using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using OS.Infastructures.Core;
+using OS.Infastructures.Repositories.Abstracts;
+using OS.Infastructures.Repositories;
+using OS.Services.Serivices.Abstracts;
+using OS.Services.Serivices;
 
 namespace onllineshopping_backend
 {
@@ -34,6 +38,30 @@ namespace onllineshopping_backend
             //services.AddAutoMapper();
 
             services.AddDbContext<OnlineShoppingDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+
+            // Repositories
+            services.AddScoped<IAccountUserRepository, AccountUserRepository>();
+            services.AddScoped<IAccountUserRoleRepository, AccountUserRoleRepository>();
+            services.AddScoped<IAddressRepository, AddressRepository>();
+            services.AddScoped<IManufacturerRepository, ManufacturerRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IOrderItemRepository, OrderItemRepository>();
+            services.AddScoped<IOrderNoteRepository, OrderNoteRepository>();
+            services.AddScoped<IPictureRepository, PictureRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProduct_ProductAttributeMappingRepository, Product_ProductAttributeMappingRepository>();
+            services.AddScoped<IProductAttributeRepository, ProductAttributeRepository>();
+            services.AddScoped<IProductAttributeCombinationRepository, ProductAttributeCombinationRepository>();
+            services.AddScoped<IProductReviewRepository, ProductReviewRepository>();
+            services.AddScoped<IProductTypeRepository, ProductTypeRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IShoppingCartItemRepository, ShoppingCartItemRepository>();
+            services.AddScoped<IStockItemMappingRepository, StockItemMappingRepository>();
+            services.AddScoped<IStoreRepository, StoreRepository>();
+
+            // Services
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IEncryptionService, EncryptionService>();
 
             // Add framework services.
             services.AddMvc();

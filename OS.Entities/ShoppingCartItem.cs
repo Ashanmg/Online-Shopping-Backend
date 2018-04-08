@@ -17,17 +17,12 @@ namespace OS.Entities
         public DateTime CreatedOnUTC { get; set; }
         public DateTime UpdatedOnUTC { get; set; }
 
-        public virtual ICollection<Store> Stores { get; set; }
-        public virtual ICollection<ShoppingCartItem> ShoppingCartItems { get; set; }
-        public virtual ICollection<AccountUser> Users { get; set; }
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual Store Store { get; set; }
+        public virtual AccountUser User { get; set; }
+        public virtual Product Product { get; set; }
 
         public ShoppingCartItem()
         {
-            Stores = new List<Store>();
-            ShoppingCartItems = new List<ShoppingCartItem>();
-            Users = new List<AccountUser>();
-            Products = new List<Product>();
         }
     }
 }

@@ -15,13 +15,11 @@ namespace OS.Entities
         public decimal SubTotalPrice { get; set; }
         public decimal TotalPrice { get; set; }
 
-        public virtual ICollection<Order> Orders { get; set; }
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual Order Order { get; set; }
+        public virtual Product Product { get; set; }
 
         public OrderItem()
         {
-            Orders = new List<Order>();
-            Products = new List<Product>();
         }
     }
 }

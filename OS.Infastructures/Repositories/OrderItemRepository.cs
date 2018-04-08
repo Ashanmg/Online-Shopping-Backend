@@ -7,7 +7,7 @@ using System.Text;
 
 namespace OS.Infastructures.Repositories
 {
-    class OrderItemRepository : EntityBaseRepository<OrderItem>, IOrderItemRepository
+    public class OrderItemRepository : EntityBaseRepository<OrderItem>, IOrderItemRepository
     {
         public OrderItemRepository(OnlineShoppingDbContext context) : base(context)
         {
