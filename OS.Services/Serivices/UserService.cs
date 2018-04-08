@@ -102,7 +102,7 @@ namespace OS.Services.Serivices
 
         private bool isPasswordValid(AccountUser user, string password)
         {
-            return string.Equals(_encryptionService.EncryptPassword(password, user.PasswordSult), user.Password);
+            return string.Equals(_encryptionService.EncryptPassword(password, user.PasswordSalt), user.HashedPassword);
         }
         #endregion
     }

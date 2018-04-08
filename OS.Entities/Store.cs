@@ -11,11 +11,10 @@ namespace OS.Entities
         public int AddressId { get; set; }
         public int StoreContactNumber { get; set; }
         public DateTime CreatedOnUTC { get; set; }
-        public virtual ICollection<Address> Addresses { get; set; }
+        public virtual Address Addresse { get; set; }
 
         public Store()
         {
-            Addresses = new List<Address>();
         }
     }
 }

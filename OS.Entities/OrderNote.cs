@@ -12,11 +12,10 @@ namespace OS.Entities
         public int DisplayToCustomer { get; set; }
         public DateTime CreatedOnUTC { get; set; }
 
-        public virtual ICollection<Order> Orders { get; set; }
+        public virtual Order Order { get; set; }
 
         public OrderNote()
         {
-            Orders = new List<Order>();
         }
     }
 }

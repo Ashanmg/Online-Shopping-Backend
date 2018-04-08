@@ -18,11 +18,11 @@ namespace OS.Entities
         public decimal Price { get; set; }
         public int TaxIncluded { get; set; }
         public DateTime CreatedOnUTC { get; set; }
-        public virtual ICollection<Manufacturer> Manufacturers { get; set; }
+        public virtual Manufacturer Manufacturer { get; set; }
+        public virtual ProductType ProductType { get; set; }
 
         public Product()
         {
-            Manufacturers = new List<Manufacturer>();
         }
     }
 }

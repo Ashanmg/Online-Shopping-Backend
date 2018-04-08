@@ -9,7 +9,7 @@ namespace OS.Entities
         public int Id { get; set; }
         public int StoreId { get; set; }
         public int AccountUserId { get; set; }
-        public int BillingAddressId { get; set; }
+        public int AddressId { get; set; }
         public string OrderStatus { get; set; }
         public int PickupInStore { get; set; }
         public string PaymentStatus { get; set; }
@@ -39,16 +39,12 @@ namespace OS.Entities
         public DateTime PaidDateUTC { get; set; }
         public DateTime CreatedOnUTC { get; set; }
 
-        public virtual ICollection<Store> Stores { get; set; }
-        public virtual ICollection<AccountUser> Users { get; set; }
-        public virtual ICollection<Address> Addresses { get; set; }
+        public virtual Store Store { get; set; }
+        public virtual AccountUser User { get; set; }
+        public virtual Address Address{ get; set; }
 
         public Order()
         {
-            Stores = new List<Store>();
-            Users = new List<AccountUser>();
-            Addresses = new List<Address>();
         }
-
     }
 }

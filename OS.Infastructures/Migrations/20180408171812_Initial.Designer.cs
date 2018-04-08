@@ -11,7 +11,7 @@ using System;
 namespace OS.Infastructures.Migrations
 {
     [DbContext(typeof(OnlineShoppingDbContext))]
-    [Migration("20180407091821_Initial")]
+    [Migration("20180408171812_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,7 +28,7 @@ namespace OS.Infastructures.Migrations
 
                     b.Property<int>("Active");
 
-                    b.Property<int>("BillingAddressId");
+                    b.Property<int>("AddressId");
 
                     b.Property<int>("ContactNumber")
                         .HasMaxLength(10);
@@ -43,25 +43,19 @@ namespace OS.Infastructures.Migrations
                         .IsRequired()
                         .HasMaxLength(100);
 
+                    b.Property<string>("HashedPassword")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
                     b.Property<DateTime>("LastLoginUTC");
 
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(100);
 
-                    b.Property<int?>("OrderId");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(100);
-
-                    b.Property<string>("PasswordSult")
+                    b.Property<string>("PasswordSalt")
                         .IsRequired()
                         .HasMaxLength(15);
-
-                    b.Property<int?>("ProductReviewId");
-
-                    b.Property<int?>("ShoppingCartItemId");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -69,11 +63,7 @@ namespace OS.Infastructures.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductReviewId");
-
-                    b.HasIndex("ShoppingCartItemId");
+                    b.HasIndex("AddressId");
 
                     b.ToTable("AccountUser");
                 });
@@ -101,8 +91,6 @@ namespace OS.Infastructures.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("AccountUserId");
-
                     b.Property<string>("Address1")
                         .IsRequired()
                         .HasMaxLength(200);
@@ -118,20 +106,10 @@ namespace OS.Infastructures.Migrations
 
                     b.Property<DateTime>("ModifiedOnUTC");
 
-                    b.Property<int?>("OrderId");
-
-                    b.Property<int?>("StoreId");
-
                     b.Property<int>("ZipPostalCode")
                         .HasMaxLength(20);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AccountUserId");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("StoreId");
 
                     b.ToTable("Address");
                 });
@@ -150,13 +128,9 @@ namespace OS.Infastructures.Migrations
                         .IsRequired()
                         .HasMaxLength(100);
 
-                    b.Property<int?>("ProductId");
-
                     b.Property<DateTime>("UpdatedOnUTC");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
 
                     b.ToTable("Manufacturer");
                 });
@@ -170,6 +144,8 @@ namespace OS.Infastructures.Migrations
 
                     b.Property<int>("AccountUserId");
 
+                    b.Property<int>("AddressId");
+
                     b.Property<int>("AllowStoringCreditCardNumber");
 
                     b.Property<string>("AuthenticationTransactionCode");
@@ -177,8 +153,6 @@ namespace OS.Infastructures.Migrations
                     b.Property<string>("AuthenticationTransactionId");
 
                     b.Property<string>("AuthenticationTransactionResult");
-
-                    b.Property<int>("BillingAddressId");
 
                     b.Property<string>("CaptureTransactionId");
 
@@ -203,10 +177,6 @@ namespace OS.Infastructures.Migrations
                     b.Property<int>("MaskedCreditCardNumber");
 
                     b.Property<decimal>("OrderDiscount");
-
-                    b.Property<int?>("OrderItemId");
-
-                    b.Property<int?>("OrderNoteId");
 
                     b.Property<string>("OrderStatus");
 
@@ -234,9 +204,11 @@ namespace OS.Infastructures.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderItemId");
+                    b.HasIndex("AccountUserId");
 
-                    b.HasIndex("OrderNoteId");
+                    b.HasIndex("AddressId");
+
+                    b.HasIndex("StoreId");
 
                     b.ToTable("Order");
                 });
@@ -262,6 +234,10 @@ namespace OS.Infastructures.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
                     b.ToTable("OrderItem");
                 });
 
@@ -280,6 +256,8 @@ namespace OS.Infastructures.Migrations
                     b.Property<int>("OrderId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
 
                     b.ToTable("OrderNote");
                 });
@@ -300,6 +278,10 @@ namespace OS.Infastructures.Migrations
                     b.Property<DateTime>("UpdatedOnUTC");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("ProductTypeId");
 
                     b.ToTable("Picture");
                 });
@@ -323,19 +305,9 @@ namespace OS.Infastructures.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<int?>("OrderItemId");
-
-                    b.Property<int?>("PictureId");
-
                     b.Property<decimal>("Price");
 
-                    b.Property<int?>("ProductAttributeCombinationId");
-
-                    b.Property<int?>("ProductReviewId");
-
                     b.Property<int>("ProductTypeId");
-
-                    b.Property<int?>("ShoppingCartItemId");
 
                     b.Property<string>("ShortDescription")
                         .HasMaxLength(150);
@@ -346,15 +318,9 @@ namespace OS.Infastructures.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderItemId");
+                    b.HasIndex("ManufacturerId");
 
-                    b.HasIndex("PictureId");
-
-                    b.HasIndex("ProductAttributeCombinationId");
-
-                    b.HasIndex("ProductReviewId");
-
-                    b.HasIndex("ShoppingCartItemId");
+                    b.HasIndex("ProductTypeId");
 
                     b.ToTable("Product");
                 });
@@ -409,6 +375,8 @@ namespace OS.Infastructures.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ProductId");
+
                     b.ToTable("ProductAttributeCombination");
                 });
 
@@ -432,6 +400,10 @@ namespace OS.Infastructures.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AccountUserId");
+
+                    b.HasIndex("ProductId");
+
                     b.ToTable("ProductReview");
                 });
 
@@ -451,13 +423,9 @@ namespace OS.Infastructures.Migrations
 
                     b.Property<int>("PerentProductTypeId");
 
-                    b.Property<int?>("PictureId");
-
                     b.Property<DateTime>("UpdatedOnUTC");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PictureId");
 
                     b.ToTable("ProductType");
                 });
@@ -503,8 +471,6 @@ namespace OS.Infastructures.Migrations
 
                     b.Property<int>("Quentity");
 
-                    b.Property<int?>("ShoppingCartItemId");
-
                     b.Property<int>("ShoppingCartTypeId");
 
                     b.Property<int>("StoreId");
@@ -513,7 +479,11 @@ namespace OS.Infastructures.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ShoppingCartItemId");
+                    b.HasIndex("AccountUserId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("StoreId");
 
                     b.ToTable("ShoppingCartItem");
                 });
@@ -549,34 +519,21 @@ namespace OS.Infastructures.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<int?>("OrderId");
-
-                    b.Property<int?>("ShoppingCartItemId");
-
                     b.Property<int>("StoreContactNumber");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ShoppingCartItemId");
+                    b.HasIndex("AddressId");
 
                     b.ToTable("Store");
                 });
 
             modelBuilder.Entity("OS.Entities.AccountUser", b =>
                 {
-                    b.HasOne("OS.Entities.Order")
-                        .WithMany("Users")
-                        .HasForeignKey("OrderId");
-
-                    b.HasOne("OS.Entities.ProductReview")
-                        .WithMany("Users")
-                        .HasForeignKey("ProductReviewId");
-
-                    b.HasOne("OS.Entities.ShoppingCartItem")
-                        .WithMany("Users")
-                        .HasForeignKey("ShoppingCartItemId");
+                    b.HasOne("OS.Entities.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("OS.Entities.AccountUserRole", b =>
@@ -592,60 +549,69 @@ namespace OS.Infastructures.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("OS.Entities.Address", b =>
-                {
-                    b.HasOne("OS.Entities.AccountUser")
-                        .WithMany("Addresses")
-                        .HasForeignKey("AccountUserId");
-
-                    b.HasOne("OS.Entities.Order")
-                        .WithMany("Addresses")
-                        .HasForeignKey("OrderId");
-
-                    b.HasOne("OS.Entities.Store")
-                        .WithMany("Addresses")
-                        .HasForeignKey("StoreId");
-                });
-
-            modelBuilder.Entity("OS.Entities.Manufacturer", b =>
-                {
-                    b.HasOne("OS.Entities.Product")
-                        .WithMany("Manufacturers")
-                        .HasForeignKey("ProductId");
-                });
-
             modelBuilder.Entity("OS.Entities.Order", b =>
                 {
-                    b.HasOne("OS.Entities.OrderItem")
-                        .WithMany("Orders")
-                        .HasForeignKey("OrderItemId");
+                    b.HasOne("OS.Entities.AccountUser", "User")
+                        .WithMany()
+                        .HasForeignKey("AccountUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("OS.Entities.OrderNote")
-                        .WithMany("Orders")
-                        .HasForeignKey("OrderNoteId");
+                    b.HasOne("OS.Entities.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("OS.Entities.Store", "Store")
+                        .WithMany()
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("OS.Entities.OrderItem", b =>
+                {
+                    b.HasOne("OS.Entities.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("OS.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("OS.Entities.OrderNote", b =>
+                {
+                    b.HasOne("OS.Entities.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("OS.Entities.Picture", b =>
+                {
+                    b.HasOne("OS.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("OS.Entities.ProductType", "ProductType")
+                        .WithMany()
+                        .HasForeignKey("ProductTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("OS.Entities.Product", b =>
                 {
-                    b.HasOne("OS.Entities.OrderItem")
-                        .WithMany("Products")
-                        .HasForeignKey("OrderItemId");
+                    b.HasOne("OS.Entities.Manufacturer", "Manufacturer")
+                        .WithMany()
+                        .HasForeignKey("ManufacturerId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("OS.Entities.Picture")
-                        .WithMany("Products")
-                        .HasForeignKey("PictureId");
-
-                    b.HasOne("OS.Entities.ProductAttributeCombination")
-                        .WithMany("Products")
-                        .HasForeignKey("ProductAttributeCombinationId");
-
-                    b.HasOne("OS.Entities.ProductReview")
-                        .WithMany("Products")
-                        .HasForeignKey("ProductReviewId");
-
-                    b.HasOne("OS.Entities.ShoppingCartItem")
-                        .WithMany("Products")
-                        .HasForeignKey("ShoppingCartItemId");
+                    b.HasOne("OS.Entities.ProductType", "ProductType")
+                        .WithMany()
+                        .HasForeignKey("ProductTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("OS.Entities.Product_ProductAttributeMapping", b =>
@@ -661,18 +627,43 @@ namespace OS.Infastructures.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("OS.Entities.ProductType", b =>
+            modelBuilder.Entity("OS.Entities.ProductAttributeCombination", b =>
                 {
-                    b.HasOne("OS.Entities.Picture")
-                        .WithMany("ProductTypes")
-                        .HasForeignKey("PictureId");
+                    b.HasOne("OS.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("OS.Entities.ProductReview", b =>
+                {
+                    b.HasOne("OS.Entities.AccountUser", "AccountUser")
+                        .WithMany()
+                        .HasForeignKey("AccountUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("OS.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("OS.Entities.ShoppingCartItem", b =>
                 {
-                    b.HasOne("OS.Entities.ShoppingCartItem")
-                        .WithMany("ShoppingCartItems")
-                        .HasForeignKey("ShoppingCartItemId");
+                    b.HasOne("OS.Entities.AccountUser", "User")
+                        .WithMany()
+                        .HasForeignKey("AccountUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("OS.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("OS.Entities.Store", "Store")
+                        .WithMany()
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("OS.Entities.StockItemMapping", b =>
@@ -690,13 +681,10 @@ namespace OS.Infastructures.Migrations
 
             modelBuilder.Entity("OS.Entities.Store", b =>
                 {
-                    b.HasOne("OS.Entities.Order")
-                        .WithMany("Stores")
-                        .HasForeignKey("OrderId");
-
-                    b.HasOne("OS.Entities.ShoppingCartItem")
-                        .WithMany("Stores")
-                        .HasForeignKey("ShoppingCartItemId");
+                    b.HasOne("OS.Entities.Address", "Addresse")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

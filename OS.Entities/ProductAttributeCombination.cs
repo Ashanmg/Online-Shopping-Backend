@@ -10,10 +10,9 @@ namespace OS.Entities
         public int ProductId { get; set; }
         public string AttributeXml { get; set; }
         public int AvailableQuentity { get; set; }
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual Product Product { get; set; }
         public ProductAttributeCombination()
         {
-            Products = new List<Product>();
         }
     }
 }

@@ -28,10 +28,10 @@ namespace OS.Web.Controllers
         }
         
         [HttpPost]
-        [Route("/login")]
-        public async Task<IActionResult> AccountUserLogin([FromBody]UserModel user)
+        [Route("login")]
+        public async Task<IActionResult> AccountUserLogin([FromBody]UserCredentialModel user)
         {
-            IActionResult _result = new ObjectResult(false);
+            ActionResult _result = new ObjectResult(false);
             BaseResponse _authenticationResponse = null;
 
             if (!ModelState.IsValid)
