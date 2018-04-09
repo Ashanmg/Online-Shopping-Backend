@@ -16,6 +16,11 @@ using OS.Infastructures.Repositories;
 using OS.Services.Serivices.Abstracts;
 using OS.Services.Serivices;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace onllineshopping_backend
 {
@@ -66,6 +71,25 @@ namespace onllineshopping_backend
 
             // Add framework services.
             services.AddMvc();
+
+            // Authentication services
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateAudience = false,
+                    ValidateIssuer = false,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes("at-least-16-character-secret-key")),
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.FromMinutes(5)
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -86,6 +110,9 @@ namespace onllineshopping_backend
             }
 
             app.UseStaticFiles();
+
+            // token Authentication
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

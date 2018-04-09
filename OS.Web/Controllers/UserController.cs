@@ -11,16 +11,23 @@ using OS.Entities;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using AutoMapper;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OS.Web.Controllers
 {
     [Route("api/[controller]")]
     public class UserController : Controller
     {
+        #region fields
         private readonly IMapper _mapper;
         private readonly IUserService _userService;
         private readonly IAccountUserRepository _accountUserRepository;
+        #endregion
 
+        #region constructor
         public UserController(
             IMapper mapper,
             IUserService userService,
@@ -30,7 +37,9 @@ namespace OS.Web.Controllers
             this._userService = userService;
             this._accountUserRepository = accountUserRepository;
         }
-        
+        #endregion
+
+        #region API Methods
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> AccountUserLogin([FromBody]UserCredentialModel user)
@@ -47,22 +56,13 @@ namespace OS.Web.Controllers
 
                 if (_membershipContext.User != null)
                 {
-                    IEnumerable<Role> _roles = _accountUserRepository.GetUserRoles(user.Username);
-                    List<Claim> _claims = new List<Claim>();
-
-                    foreach (Role role in _roles)
-                    {
-                        Claim _claim = new Claim(ClaimTypes.Role, "Administrator", ClaimValueTypes.String, user.Username);
-                        _claims.Add(_claim);
-                    }
-                    await HttpContext.Authentication.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                        new ClaimsPrincipal(new ClaimsIdentity(_claims, CookieAuthenticationDefaults.AuthenticationScheme)),
-                        new Microsoft.AspNetCore.Http.Authentication.AuthenticationProperties { IsPersistent = user.RememberMe });
+                    // generate Json Web Token
+                    string token = GenerateToken(user.Username);
 
                     _authenticationResponse = new BaseResponse()
                     {
                         Succeeded = true,
-                        Message = "Authentication succeeded"
+                        Message = token
                     };
                 }
                 else
@@ -120,5 +120,30 @@ namespace OS.Web.Controllers
             _result = new ObjectResult(_registerResponse);
             return _result;
         }
+        #endregion
+
+        #region Helper Methods
+        private string GenerateToken(string username)
+        {
+            var claims = new Claim[]
+            {
+                new Claim(ClaimTypes.Name, username),
+                new Claim(JwtRegisteredClaimNames.Nbf,
+                new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString()),
+                new Claim(JwtRegisteredClaimNames.Exp,
+                new DateTimeOffset(DateTime.UtcNow.AddDays(1)).ToUnixTimeSeconds().ToString())
+            };
+
+            var token = new JwtSecurityToken(
+            new JwtHeader(new SigningCredentials(
+            new SymmetricSecurityKey(Encoding.UTF8.GetBytes("at-least-16-character-secret-key")),
+               SecurityAlgorithms.HmacSha256)),
+            new JwtPayload(claims));
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+
+
+        }
+        #endregion
     }
 }
