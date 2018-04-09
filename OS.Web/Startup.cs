@@ -15,6 +15,7 @@ using OS.Infastructures.Repositories.Abstracts;
 using OS.Infastructures.Repositories;
 using OS.Services.Serivices.Abstracts;
 using OS.Services.Serivices;
+using AutoMapper;
 
 namespace onllineshopping_backend
 {
@@ -35,7 +36,7 @@ namespace onllineshopping_backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddAutoMapper();
+            services.AddAutoMapper();
 
             services.AddDbContext<OnlineShoppingDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
 

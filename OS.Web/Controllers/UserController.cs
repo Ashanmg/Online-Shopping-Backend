@@ -10,19 +10,23 @@ using OS.Services.Core;
 using OS.Entities;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using AutoMapper;
 
 namespace OS.Web.Controllers
 {
     [Route("api/[controller]")]
     public class UserController : Controller
     {
+        private readonly IMapper _mapper;
         private readonly IUserService _userService;
         private readonly IAccountUserRepository _accountUserRepository;
 
         public UserController(
+            IMapper mapper,
             IUserService userService,
             IAccountUserRepository accountUserRepository)
         {
+            this._mapper = mapper;
             this._userService = userService;
             this._accountUserRepository = accountUserRepository;
         }
@@ -48,7 +52,7 @@ namespace OS.Web.Controllers
 
                     foreach (Role role in _roles)
                     {
-                        Claim _claim = new Claim(ClaimTypes.Role, "Admin", ClaimValueTypes.String, user.Username);
+                        Claim _claim = new Claim(ClaimTypes.Role, "Administrator", ClaimValueTypes.String, user.Username);
                         _claims.Add(_claim);
                     }
                     await HttpContext.Authentication.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
@@ -79,6 +83,41 @@ namespace OS.Web.Controllers
                 };
             }
             _result = new ObjectResult(_authenticationResponse);
+            return _result;
+        }
+
+        [HttpPost]
+        [Route("register")]
+        public IActionResult AccountUserRegister([FromBody]UserGeneralModel user)
+        {
+            IActionResult _result = new ObjectResult(false);
+            BaseResponse _registerResponse = null;
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var accountUser = _mapper.Map<UserGeneralModel, AccountUser>(user);
+
+                AccountUser _accountUser = _userService.CreateUser(accountUser);
+
+                _registerResponse = new BaseResponse()
+                {
+                    Succeeded = true,
+                    Message = "Registration succeeded"
+                };
+            }
+            catch (Exception ex)
+            {
+                _registerResponse = new BaseResponse()
+                {
+                    Succeeded = false,
+                    Message = ex.Message
+                };
+            }
+
+            _result = new ObjectResult(_registerResponse);
             return _result;
         }
     }
