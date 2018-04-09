@@ -8,9 +8,9 @@ namespace OS.Services.Serivices
 {
     public class EncryptionService : IEncryptionService
     {
-        public string CreateSalt()
+        public string CreateSalt(int size)
         {
-            var data = new Byte[0x10];
+            var data = new Byte[size];
             var cryptoServiceProvider = System.Security.Cryptography.RandomNumberGenerator.Create();
             cryptoServiceProvider.GetBytes(data);
             return Convert.ToBase64String(data);

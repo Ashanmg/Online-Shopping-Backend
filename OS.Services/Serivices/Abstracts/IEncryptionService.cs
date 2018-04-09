@@ -10,7 +10,7 @@ namespace OS.Services.Serivices.Abstracts
         /// Creates a random salt key
         /// </summary>
         /// <returns></returns>
-        string CreateSalt();
+        string CreateSalt(int size);
 
         /// <summary>
         /// The password encryption method

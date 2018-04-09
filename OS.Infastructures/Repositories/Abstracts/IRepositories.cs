@@ -11,7 +11,10 @@ namespace OS.Infastructures.Repositories.Abstracts
         IEnumerable<Role> GetUserRoles(string username);
     }
     public interface IAccountUserRoleRepository : IEntityBaseRepository<AccountUserRole> { }
-    public interface IAddressRepository : IEntityBaseRepository<Address> { }
+    public interface IAddressRepository : IEntityBaseRepository<Address>
+    {
+        Address GetInsertedAddress();
+    }
     public interface IManufacturerRepository : IEntityBaseRepository<Manufacturer> { }
     public interface IOrderRepository : IEntityBaseRepository<Order> { }
     public interface IOrderItemRepository : IEntityBaseRepository<OrderItem> { }
