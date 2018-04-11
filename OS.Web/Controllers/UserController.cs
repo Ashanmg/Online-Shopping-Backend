@@ -15,6 +15,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 
 namespace OS.Web.Controllers
 {
@@ -119,6 +120,14 @@ namespace OS.Web.Controllers
 
             _result = new ObjectResult(_registerResponse);
             return _result;
+        }
+
+        [HttpGet]
+        [Route("test")]
+        [DisableCors]
+        public IActionResult getalluser()
+        {
+            return new ObjectResult(false);
         }
         #endregion
 
