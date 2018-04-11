@@ -21,6 +21,8 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
 
 namespace onllineshopping_backend
 {
@@ -70,7 +72,16 @@ namespace onllineshopping_backend
             services.AddScoped<IEncryptionService, EncryptionService>();
 
             // Add framework services.
+            services.AddCors(options => options.AddPolicy("AllowSpecificOrigin",
+                builder => builder.WithOrigins("http//localhost:4200")));
+
             services.AddMvc();
+
+            // Enable Cors in globally
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new CorsAuthorizationFilterFactory("AllowSpecificOrigin"));
+            });
 
             // Authentication services
             services.AddAuthentication(options =>
@@ -113,6 +124,9 @@ namespace onllineshopping_backend
 
             // token Authentication
             app.UseAuthentication();
+
+            // Show use cors with the name policy
+            app.UseCors("AllowSpecificOrigin");
 
             app.UseMvc(routes =>
             {
