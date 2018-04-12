@@ -124,10 +124,16 @@ namespace OS.Web.Controllers
 
         [HttpGet]
         [Route("test")]
-        [DisableCors]
         public IActionResult getalluser()
         {
-            return new ObjectResult(false);
+            //return new ObjectResult(false);
+            var userCredentialModel = new UserCredentialModel {
+                Id = 1,
+                Username = "ashanmg9@gmail.com",
+                Password = "zaq1xsw2!@#$",
+                RememberMe = false
+            };
+            return Ok(userCredentialModel);
         }
         #endregion
 
