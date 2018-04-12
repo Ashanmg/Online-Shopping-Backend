@@ -73,7 +73,7 @@ namespace onllineshopping_backend
 
             // Add framework services.
             services.AddCors(options => options.AddPolicy("AllowSpecificOrigin",
-                builder => builder.WithOrigins("http//localhost:4200")));
+                builder => builder.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader()));
 
             services.AddMvc();
 
@@ -122,11 +122,11 @@ namespace onllineshopping_backend
 
             app.UseStaticFiles();
 
-            // token Authentication
-            app.UseAuthentication();
-
             // Show use cors with the name policy
             app.UseCors("AllowSpecificOrigin");
+
+            // token Authentication
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
