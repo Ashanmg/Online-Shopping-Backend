@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using OS.Services.Serivices.Abstracts;
 using OS.Web.ViewModels;
+using OS.Entities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -39,7 +40,12 @@ namespace OS.Web.Controllers
             BaseResponse _productResponse = null;
             try
             {
+                // get product types
+                var _productTypeList = GetProductTypes();
+
                 var _productList = _productService.GetProductListForProductType(cId);
+
+                // create object list set
                 _result = new ObjectResult(_productList);
             }
             catch (Exception ex)
@@ -105,6 +111,18 @@ namespace OS.Web.Controllers
             }
 
             return _result;
+        }
+        #endregion
+
+        #region helperMethod
+
+        /// <summary>
+        /// Get all product types
+        /// </summary>
+        /// <returns></returns>
+        private List<ProductType> GetProductTypes()
+        {
+            return _productService.GetProductTypes().Cast<ProductType>().ToList();
         }
         #endregion
     }

@@ -61,7 +61,11 @@ namespace OS.Services.Serivices
             return membershipContext;
         }
 
-
+        /// <summary>
+        /// Register user for getting add to cart and checkout services
+        /// </summary>
+        /// <param name="accountUser">The account user details</param>
+        /// <returns>Return account user</returns>
         public AccountUser CreateUser(AccountUser accountUser)
         {
             var existingUser = _accountUserRepository.GetSingleByUsername(accountUser.Username);
@@ -88,12 +92,18 @@ namespace OS.Services.Serivices
             _accountUserRepository.Commit();
 
             // add user account role for created user
+            // 3 means that guest roleId
             addUserToRole(accountUser, 3);
             _accountUserRepository.Commit();
 
             return accountUser;
         }
 
+        /// <summary>
+        /// Create address for registered account user
+        /// </summary>
+        /// <param name="address">The address</param>
+        /// <returns>Return address</returns>
         public Address AddAddress(Address address)
         {
             if (address == null)
