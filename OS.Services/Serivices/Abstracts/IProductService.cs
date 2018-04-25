@@ -8,8 +8,11 @@ namespace OS.Services.Serivices.Abstracts
 {
     public interface IProductService
     {
-        IEnumerable<Product> GetProductListForProductType(int productTypeId);
+        // Retrun type list use for the pupose of add , remove etc...
+        // Return type a enumerable interface use for the pupose of read only etc...
+        Task<IEnumerable<Product>> GetProductListForProductType(int productTypeId);
         Task<IEnumerable<Product>> GetProductListForCategoryPage();
-        Product GetSingleProduct(int id);
+        Task<Product> GetSingleProduct(int id);
+        IEnumerable<ProductType> GetProductTypes();
     }
 }

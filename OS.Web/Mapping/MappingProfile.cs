@@ -12,7 +12,8 @@ namespace OS.Web.Mapping
     {
         public MappingProfile()
         {
-            // Api view models to Domain model
+            /************** Api view models to Domain models ****************/
+            // Create map for registration 
             CreateMap<UserGeneralModel, AccountUser>()
                 .ForMember(au => au.Id, opt => opt.Ignore())
                 .ForMember(au => au.HashedPassword, opt => opt.MapFrom(u => u.Password))
@@ -25,6 +26,9 @@ namespace OS.Web.Mapping
                     ZipPostalCode = u.ZipPostalCode,
                     ModifiedOnUTC = DateTime.UtcNow
                 }));
+
+            /************** Domain model to Api view models ****************/
+
         }
     }
 }

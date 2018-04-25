@@ -12,31 +12,54 @@ namespace OS.Services.Serivices
     {
         #region fields
         private readonly IProductRepository _productRepository;
+        private readonly IProductTypeRepository _productTypeRepository;
         #endregion
 
         #region constructor
-        public ProductService(IProductRepository productRepository)
+        public ProductService(IProductRepository productRepository,
+            IProductTypeRepository productTypeRepository)
         {
             this._productRepository = productRepository;
+            this._productTypeRepository = productTypeRepository;
         }
         #endregion
 
         #region Methods
-        public IEnumerable<Product> GetProductListForProductType(int productTypeId)
+
+        /// <summary>
+        /// Get products for selected product type
+        /// </summary>
+        /// <param name="productTypeId">The product type id</param>
+        /// <returns>Return a list of products</returns>
+        public Task<IEnumerable<Product>> GetProductListForProductType(int productTypeId)
         {
-            var _product = _productRepository.FindBy(p => p.ProductTypeId == productTypeId);
+            var _product = _productRepository.FindByAsync(p => p.ProductTypeId == productTypeId);
             return _product;
         }
 
+        /// <summary>
+        /// Get products for category homepage to show before select product type
+        /// </summary>
+        /// <returns>Retrun a list of product</returns>
         public Task<IEnumerable<Product>> GetProductListForCategoryPage()
         {
             return _productRepository.FindByAsync(p => p.ShowOnCategoryPage == 1);
         }
 
-        public Product GetSingleProduct(int id)
+        /// <summary>
+        /// Get a single product
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <returns>Retrun a single product</returns>
+        public Task<Product> GetSingleProduct(int id)
         {
-            return _productRepository.GetSingle(id);
+            return _productRepository.GetSingleAsync(id);
         }
+
+        public IEnumerable<ProductType> GetProductTypes()
+        {
+            return _productTypeRepository.GetAll();
+        }
+    }   
         #endregion 
-    }
 }
