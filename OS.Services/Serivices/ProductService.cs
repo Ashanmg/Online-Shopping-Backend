@@ -41,9 +41,9 @@ namespace OS.Services.Serivices
         /// Get products for category homepage to show before select product type
         /// </summary>
         /// <returns>Retrun a list of product</returns>
-        public Task<IEnumerable<Product>> GetProductListForCategoryPage()
+        public IEnumerable<Product> GetProductListForCategoryPage()
         {
-            return _productRepository.FindByAsync(p => p.ShowOnCategoryPage == 1);
+            return _productRepository.FindBy(p => p.ShowOnCategoryPage == 1);
         }
 
         /// <summary>

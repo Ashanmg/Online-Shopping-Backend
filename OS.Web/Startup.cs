@@ -70,6 +70,7 @@ namespace onllineshopping_backend
             // Services
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IEncryptionService, EncryptionService>();
+            services.AddScoped<IProductService, ProductService>();
 
             // Add framework services.
             services.AddCors(options => options.AddPolicy("AllowSpecificOrigin",

@@ -11,7 +11,7 @@ namespace OS.Services.Serivices.Abstracts
         // Retrun type list use for the pupose of add , remove etc...
         // Return type a enumerable interface use for the pupose of read only etc...
         Task<IEnumerable<Product>> GetProductListForProductType(int productTypeId);
-        Task<IEnumerable<Product>> GetProductListForCategoryPage();
+        IEnumerable<Product> GetProductListForCategoryPage();
         Task<Product> GetSingleProduct(int id);
         IEnumerable<ProductType> GetProductTypes();
     }
