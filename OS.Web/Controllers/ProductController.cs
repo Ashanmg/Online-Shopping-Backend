@@ -66,7 +66,7 @@ namespace OS.Web.Controllers
         /// <returns></returns>
         public IActionResult GetProductForCategoryPage()
         {
-            IActionResult _result = new ObjectResult(false);
+             IActionResult _result = new ObjectResult(false);
             BaseResponse _productResponse = null;
             try
             {
