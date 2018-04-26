@@ -28,7 +28,7 @@ namespace OS.Web.Controllers
 
         #region API Methods
         [HttpGet("cId")]
-        [Route("/products")]
+        [Route("products")]
         /// <summary>
         /// get all product for specific selected product type
         /// </summary>
@@ -40,9 +40,6 @@ namespace OS.Web.Controllers
             BaseResponse _productResponse = null;
             try
             {
-                // get product types
-                var _productTypeList = GetProductTypes();
-
                 var _productList = _productService.GetProductListForProductType(cId);
 
                 // create object list set
@@ -62,7 +59,7 @@ namespace OS.Web.Controllers
         }
 
         [HttpGet]
-        [Route("/category")]
+        [Route("category")]
         /// <summary>
         /// get product for category home page what products set to home category page.
         /// </summary>
@@ -73,8 +70,17 @@ namespace OS.Web.Controllers
             BaseResponse _productResponse = null;
             try
             {
-                var _productList = _productService.GetProductListForCategoryPage();
-                _result = new ObjectResult(_productList);
+                // get product types
+                var _productTypeList = GetProductTypes();
+
+                var _productList = _productService.GetProductListForCategoryPage().Cast<Product>().ToList();
+
+                var _objectResponse = new ObjectResponse
+                {
+                    ParentList = _productTypeList,
+                    productList = _productList
+                };
+                _result = new ObjectResult(_objectResponse);
             }
             catch (Exception ex)
             {
@@ -90,7 +96,7 @@ namespace OS.Web.Controllers
         }
 
         [HttpGet("id")]
-        [Route("/singleproduct")]
+        [Route("singleproduct")]
         public IActionResult GetSingleProduct(int id)
         {
             IActionResult _result = new ObjectResult(false);
@@ -120,9 +126,40 @@ namespace OS.Web.Controllers
         /// Get all product types
         /// </summary>
         /// <returns></returns>
-        private List<ProductType> GetProductTypes()
+        private List<ParentProductTypeModel> GetProductTypes()
         {
-            return _productService.GetProductTypes().Cast<ProductType>().ToList();
+            var _productTypeList = _productService.GetProductTypes();
+            var _parentProductTypeList = _productTypeList.Where(x => x.PerentProductTypeId == 0);
+            _productTypeList = _productTypeList.Where(x => x.PerentProductTypeId != 0);
+
+            var _parentList = new List<ParentProductTypeModel>();
+
+            foreach (var productType in _parentProductTypeList)
+            {
+                var _parentProductType = new ParentProductTypeModel
+                {
+                    Id = productType.Id,
+                    Name = productType.Name
+                };
+
+                _parentList.Add(_parentProductType);
+            }
+
+            foreach (var productType in _productTypeList)
+            {
+                var _index = _parentList.FindIndex(x => x.Id == productType.PerentProductTypeId);
+                var _parentProductType = new ChildProductTypeModel
+                {
+                    Id = productType.Id,
+                    Name = productType.Name
+                };
+
+                // _parentList.Where(x => { x.ChildProductTypeList.Add(_parentProductType)})
+
+                _parentList[_index].ChildProductTypeList.Add(_parentProductType);            
+            }
+
+            return _parentList;
         }
         #endregion
     }
