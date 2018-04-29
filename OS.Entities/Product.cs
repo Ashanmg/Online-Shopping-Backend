@@ -15,11 +15,13 @@ namespace OS.Entities
         public int ApprovedTotalReview { get; set; }
         public decimal ApprovedRatingSum { get; set; }
         public int ManufacturerId { get; set; }
+        public int PictureId { get; set; }
         public decimal Price { get; set; }
         public int TaxIncluded { get; set; }
         public DateTime CreatedOnUTC { get; set; }
         public virtual Manufacturer Manufacturer { get; set; }
         public virtual ProductType ProductType { get; set; }
+        public virtual Picture Picture { get; set; }
 
         public Product()
         {
