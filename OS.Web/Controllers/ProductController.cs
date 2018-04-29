@@ -73,7 +73,7 @@ namespace OS.Web.Controllers
                 // get product types
                 var _productTypeList = GetProductTypes();
 
-                var _productList = _productService.GetProductListForCategoryPage().Cast<Product>().ToList();
+                var _productList = _productService.GetProductListForCategoryPage();
 
                 var _objectResponse = new ObjectResponse
                 {

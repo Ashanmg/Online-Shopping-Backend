@@ -20,7 +20,10 @@ namespace OS.Infastructures.Repositories.Abstracts
     public interface IOrderItemRepository : IEntityBaseRepository<OrderItem> { }
     public interface IOrderNoteRepository : IEntityBaseRepository<OrderNote> { }
     public interface IPictureRepository : IEntityBaseRepository<Picture> { }
-    public interface IProductRepository : IEntityBaseRepository<Product> { }
+    public interface IProductRepository : IEntityBaseRepository<Product>
+    {
+        List<Product> GetProductListForCategoryPage();
+    }
     public interface IProduct_ProductAttributeMappingRepository : IEntityBaseRepository<Product_ProductAttributeMapping> { }
     public interface IProductAttributeRepository : IEntityBaseRepository<ProductAttribute> { }
     public interface IProductAttributeCombinationRepository : IEntityBaseRepository<ProductAttributeCombination> { }
