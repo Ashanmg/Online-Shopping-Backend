@@ -30,7 +30,10 @@ namespace OS.Infastructures.Repositories.Abstracts
     public interface IProductReviewRepository : IEntityBaseRepository<ProductReview> { }
     public interface IProductTypeRepository : IEntityBaseRepository<ProductType> { }
     public interface IRoleRepository : IEntityBaseRepository<Role> { }
-    public interface IShoppingCartItemRepository : IEntityBaseRepository<ShoppingCartItem> { }
+    public interface IShoppingCartItemRepository : IEntityBaseRepository<ShoppingCartItem>
+    {
+        int GetCartItemCountOfUser(int accountUserId);
+    }
     public interface IStockItemMappingRepository : IEntityBaseRepository<StockItemMapping> { }
     public interface IStoreRepository : IEntityBaseRepository<Store> { }
 }
