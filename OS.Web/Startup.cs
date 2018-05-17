@@ -73,8 +73,10 @@ namespace onllineshopping_backend
             services.AddScoped<IProductService, ProductService>();
 
             // Add framework services.
+            //services.AddCors(options => options.AddPolicy("AllowSpecificOrigin",
+            //    builder => builder.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader()));
             services.AddCors(options => options.AddPolicy("AllowSpecificOrigin",
-                builder => builder.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader()));
+                builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 
             services.AddMvc();
 
