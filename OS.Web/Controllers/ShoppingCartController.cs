@@ -23,6 +23,7 @@ namespace OS.Web.Controllers
         [HttpGet("{id}")]
         [Route("getcartcount")]
         public IActionResult GetRemainingCartItemCountforUser(int id)
+
         {
             IActionResult _result = new ObjectResult(false);
             BaseResponse _productReponse = null;
@@ -54,6 +55,43 @@ namespace OS.Web.Controllers
             }
             return _result;
         }
+
+        [HttpGet("{id}")]
+        [Route("getcartdetail")]
+        public IActionResult GeCartDetails(int id)
+
+        {
+            IActionResult _result = new ObjectResult(false);
+            BaseResponse _productReponse = null;
+            try
+            {
+                if (id != 0)
+                {
+                    var _count = this._shoppingCartService.GetCartDetails(id);
+                    _result = new ObjectResult(_count);
+                }
+                else
+                {
+                    _productReponse = new BaseResponse
+                    {
+                        Succeeded = false,
+                        Message = "Please login to get cart item count"
+                    };
+                    _result = new ObjectResult(_productReponse);
+                }
+            }
+            catch (Exception ex)
+            {
+                _productReponse = new BaseResponse
+                {
+                    Succeeded = false,
+                    Message = ex.Message
+                };
+                _result = new ObjectResult(_productReponse);
+            }
+            return _result;
+        }
+
 
         // POST api/values
         [HttpPost]
