@@ -67,15 +67,15 @@ namespace OS.Web.Controllers
             {
                 if (id != 0)
                 {
-                    var _count = this._shoppingCartService.GetCartDetails(id);
-                    _result = new ObjectResult(_count);
+                    var _cartdetails = this._shoppingCartService.GetCartDetails(id);
+                    _result = new ObjectResult(_cartdetails);
                 }
                 else
                 {
                     _productReponse = new BaseResponse
                     {
                         Succeeded = false,
-                        Message = "Please login to get cart item count"
+                        Message = "Please login to get cart item details"
                     };
                     _result = new ObjectResult(_productReponse);
                 }
