@@ -95,8 +95,10 @@ namespace OS.Web.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        [Route("addcartdetail")]
+        public void Post([FromBody]ShoppingCartItemModel cartItem)
         {
+            
         }
 
         // PUT api/values/5
