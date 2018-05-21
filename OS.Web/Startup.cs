@@ -86,6 +86,12 @@ namespace onllineshopping_backend
                 options.Filters.Add(new CorsAuthorizationFilterFactory("AllowSpecificOrigin"));
             });
 
+            // client certificate
+            services.Configure<IISOptions>(options =>
+            {
+                options.ForwardClientCertificate = false;
+            });
+
             // Authentication services
             services.AddAuthentication(options =>
             {
