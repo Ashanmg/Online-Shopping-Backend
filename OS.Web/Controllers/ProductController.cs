@@ -97,6 +97,10 @@ namespace OS.Web.Controllers
 
         [HttpGet("id")]
         [Route("singleproduct")]
+        ///<summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
         public IActionResult GetSingleProduct(int id)
         {
             IActionResult _result = new ObjectResult(false);
@@ -119,6 +123,34 @@ namespace OS.Web.Controllers
             return _result;
         }
         #endregion
+
+        [HttpGet("id")]
+        [Route("checkvariant")]
+        ///<summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult IsVariantProduct(int productId)
+        {
+            IActionResult _result = new ObjectResult(false);
+            BaseResponse _productResponse = null;
+            try
+            {
+                var isVariantProduct = _productService.IsVariantProduct(productId);
+                _result = new ObjectResult(isVariantProduct);
+            }
+            catch (Exception ex)
+            {
+                _productResponse = new BaseResponse
+                {
+                    Succeeded = false,
+                    Message = ex.Message
+                };
+                _result = new ObjectResult(_productResponse);
+            }
+
+            return _result;
+        }
 
         #region helperMethod
 

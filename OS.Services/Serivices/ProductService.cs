@@ -3,6 +3,7 @@ using OS.Infastructures.Repositories.Abstracts;
 using OS.Services.Serivices.Abstracts;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,14 +14,17 @@ namespace OS.Services.Serivices
         #region fields
         private readonly IProductRepository _productRepository;
         private readonly IProductTypeRepository _productTypeRepository;
+        private readonly IProduct_ProductAttributeMappingRepository _product_ProductAttributeMappingRepository;
         #endregion
 
         #region constructor
         public ProductService(IProductRepository productRepository,
-            IProductTypeRepository productTypeRepository)
+            IProductTypeRepository productTypeRepository,
+            IProduct_ProductAttributeMappingRepository product_ProductAttributeMappingRepository)
         {
             this._productRepository = productRepository;
             this._productTypeRepository = productTypeRepository;
+            this._product_ProductAttributeMappingRepository = product_ProductAttributeMappingRepository;
         }
         #endregion
 
@@ -59,6 +63,19 @@ namespace OS.Services.Serivices
         public IEnumerable<ProductType> GetProductTypes()
         {
             return _productTypeRepository.GetAll();
+        }
+
+        public bool IsVariantProduct(int productId)
+        {
+            var value = _product_ProductAttributeMappingRepository.FindBy(p => p.ProductId == productId).ToList();
+            if (value.Count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }   
         #endregion 
