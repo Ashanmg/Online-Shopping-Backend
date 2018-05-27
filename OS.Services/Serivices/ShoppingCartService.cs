@@ -8,11 +8,11 @@ using System.Text;
 
 namespace OS.Services.Serivices
 {
-    public class SoppingCartService : IShoppingCartService
+    public class ShoppingCartService : IShoppingCartService
     {
         private readonly IShoppingCartItemRepository _shoppingCartItemRepository;
 
-        public SoppingCartService(IShoppingCartItemRepository shoppingCartItemRepository)
+        public ShoppingCartService(IShoppingCartItemRepository shoppingCartItemRepository)
         {
             this._shoppingCartItemRepository = shoppingCartItemRepository;
         }
@@ -25,5 +25,12 @@ namespace OS.Services.Serivices
         {
             return _shoppingCartItemRepository.FindBy(x => x.AccountUserId == id).Cast<ShoppingCartItem>().ToList();
         }
+
+        public int AddCartDetails(ShoppingCartItem cartitem)
+        {
+            this._shoppingCartItemRepository.Add(cartitem);
+            return this.GetCartItemCountOfUser(cartitem.AccountUserId);
+        }
+        
     }
 }
