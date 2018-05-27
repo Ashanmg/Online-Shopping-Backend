@@ -124,7 +124,7 @@ namespace OS.Web.Controllers
         }
         #endregion
 
-        [HttpGet("id")]
+        [HttpGet("productId")]
         [Route("checkvariant")]
         ///<summary>
         ///
