@@ -20,6 +20,7 @@ namespace OS.Infastructures.Core
         public DbSet<Product> Product { get; set; }
         public DbSet<Product_ProductAttributeMapping> Product_ProductAttributeMapping { get; set; }
         public DbSet<ProductAttribute> ProductAttribute { get; set; }
+        public DbSet<ProductAttributeValue> ProductAttributeValue { get; set; }
         public DbSet<ProductAttributeCombination> ProductAttributeCombination { get; set; }
         public DbSet<ProductReview> ProductReview { get; set; }
         public DbSet<ProductType> ProductType { get; set; }
@@ -85,6 +86,10 @@ namespace OS.Infastructures.Core
             // ProductAttribute
             modelBuilder.Entity<ProductAttribute>().Property(p => p.Name).HasMaxLength(50);
             modelBuilder.Entity<ProductAttribute>().Property(p => p.Description).HasMaxLength(150);
+
+            // ProductAttributeValue
+            modelBuilder.Entity<ProductAttributeValue>().Property(p => p.ProductValue).IsRequired();
+            modelBuilder.Entity<ProductAttributeValue>().Property(p => p.ValueDescription).HasMaxLength(150);
 
             // ProductAttributeCombination
             modelBuilder.Entity<ProductAttributeCombination>().Property(p => p.AttributeXml).HasMaxLength(int.MaxValue);
