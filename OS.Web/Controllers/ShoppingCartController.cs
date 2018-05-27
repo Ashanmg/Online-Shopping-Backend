@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using OS.Web.ViewModels;
 using OS.Services.Serivices.Abstracts;
+using AutoMapper;
+using OS.Entities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,10 +16,14 @@ namespace OS.Web.Controllers
     public class ShoppingCartController : Controller
     {
         private readonly IShoppingCartService _shoppingCartService;
+        private readonly IMapper _mapper;
 
-        public ShoppingCartController(IShoppingCartService shoppingCartService)
+        public ShoppingCartController(
+            IShoppingCartService shoppingCartService,
+            IMapper mapper)
         {
             this._shoppingCartService = shoppingCartService;
+            this._mapper = mapper;
         }
 
         [HttpGet("{id}")]
@@ -26,7 +32,7 @@ namespace OS.Web.Controllers
 
         {
             IActionResult _result = new ObjectResult(false);
-            BaseResponse _productReponse = null;
+            BaseResponse _carttReponse = null;
             try
             {
                 if (id != 0)
@@ -36,22 +42,22 @@ namespace OS.Web.Controllers
                 }
                 else
                 {
-                    _productReponse = new BaseResponse
+                    _carttReponse = new BaseResponse
                     {
                         Succeeded = false,
                         Message = "Please login to get cart item count"
                     };
-                    _result = new ObjectResult(_productReponse);
+                    _result = new ObjectResult(_carttReponse);
                 }
             }
             catch (Exception ex)
             {
-                _productReponse = new BaseResponse
+                _carttReponse = new BaseResponse
                 {
                     Succeeded = false,
                     Message = ex.Message
                 };
-                _result = new ObjectResult(_productReponse);
+                _result = new ObjectResult(_carttReponse);
             }
             return _result;
         }
@@ -62,7 +68,7 @@ namespace OS.Web.Controllers
 
         {
             IActionResult _result = new ObjectResult(false);
-            BaseResponse _productReponse = null;
+            BaseResponse _carttReponse = null;
             try
             {
                 if (id != 0)
@@ -72,22 +78,22 @@ namespace OS.Web.Controllers
                 }
                 else
                 {
-                    _productReponse = new BaseResponse
+                    _carttReponse = new BaseResponse
                     {
                         Succeeded = false,
                         Message = "Please login to get cart item details"
                     };
-                    _result = new ObjectResult(_productReponse);
+                    _result = new ObjectResult(_carttReponse);
                 }
             }
             catch (Exception ex)
             {
-                _productReponse = new BaseResponse
+                _carttReponse = new BaseResponse
                 {
                     Succeeded = false,
                     Message = ex.Message
                 };
-                _result = new ObjectResult(_productReponse);
+                _result = new ObjectResult(_carttReponse);
             }
             return _result;
         }
@@ -96,9 +102,42 @@ namespace OS.Web.Controllers
         // POST api/values
         [HttpPost]
         [Route("addcartdetail")]
-        public void Post([FromBody]ShoppingCartItemModel cartItem)
+        public IActionResult AddCartDetails([FromBody]ShoppingCartItemModel cartItem)
         {
-            
+            IActionResult _result = new ObjectResult(false);
+            BaseResponse _cartResponse = null;
+
+            try
+            {
+                if (cartItem.UserId != 0)
+                {
+                    // Mapping to ShoppingCartItem entity
+                    var shoppingCartItem = _mapper.Map<ShoppingCartItemModel, ShoppingCartItem>(cartItem);
+                    var cartdetails = _shoppingCartService.AddCartDetails(shoppingCartItem);
+
+                    _result = new ObjectResult(cartdetails);
+                }
+                else
+                {
+                    _cartResponse = new BaseResponse
+                    {
+                        Succeeded = false,
+                        Message = "Please login to add cart item details"
+                    };
+                    _result = new ObjectResult(_cartResponse);
+                }
+            }
+            catch (Exception ex)
+            {
+                _cartResponse = new BaseResponse
+                {
+                    Succeeded = true,
+                    Message = ex.Message
+                };
+                _result = new ObjectResult(_cartResponse);
+            }
+
+            return _result;
         }
 
         // PUT api/values/5

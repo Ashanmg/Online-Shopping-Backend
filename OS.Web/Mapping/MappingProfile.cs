@@ -27,6 +27,12 @@ namespace OS.Web.Mapping
                     ModifiedOnUTC = DateTime.UtcNow
                 }));
 
+            CreateMap<ShoppingCartItemModel, ShoppingCartItem>()
+                .ForMember(sci => sci.Id, opt => opt.Ignore())
+                .ForMember(sci => sci.AccountUserId, opt => opt.MapFrom(sm => sm.UserId))
+                .ForMember(sci => sci.AttributeXml, opt => opt.MapFrom(sm => String.Format("colourId:{0},sizeId:{1}", sm.ColourId, sm.SizeId)))
+                .ForMember(sci => sci.Quentity, opt => opt.MapFrom(sm => sm.Quantity));
+
             /************** Domain model to Api view models ****************/
 
         }
