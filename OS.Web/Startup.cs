@@ -66,6 +66,7 @@ namespace onllineshopping_backend
             services.AddScoped<IShoppingCartItemRepository, ShoppingCartItemRepository>();
             services.AddScoped<IStockItemMappingRepository, StockItemMappingRepository>();
             services.AddScoped<IStoreRepository, StoreRepository>();
+            services.AddScoped<IProductAttributeValueRepository, ProductAttributeValueRepository>();
 
             // Services
             services.AddScoped<IUserService, UserService>();

@@ -15,5 +15,6 @@ namespace OS.Services.Serivices.Abstracts
         Task<Product> GetSingleProduct(int id);
         IEnumerable<ProductType> GetProductTypes();
         Boolean IsVariantProduct(int productId);
+        List<ProductAttributeValue> GetProductAttributeValue(int id);
     }
 }
