@@ -23,4 +23,15 @@ namespace OS.Web.ViewModels
             productList = new List<Product>();
         }
     }
+
+    public class ProductResponse : BaseResponse
+    {
+        public Product SingleProduct { get; set; }
+        public List<ProductAttributeValue> AttributeValue{ get; set; }
+
+        public ProductResponse()
+        {
+            AttributeValue = new List<ProductAttributeValue>();
+        }
+    }
 }

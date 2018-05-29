@@ -15,16 +15,19 @@ namespace OS.Services.Serivices
         private readonly IProductRepository _productRepository;
         private readonly IProductTypeRepository _productTypeRepository;
         private readonly IProduct_ProductAttributeMappingRepository _product_ProductAttributeMappingRepository;
+        private readonly IProductAttributeValueRepository _productAttributeValueRepository;
         #endregion
 
         #region constructor
         public ProductService(IProductRepository productRepository,
             IProductTypeRepository productTypeRepository,
-            IProduct_ProductAttributeMappingRepository product_ProductAttributeMappingRepository)
+            IProduct_ProductAttributeMappingRepository product_ProductAttributeMappingRepository,
+            IProductAttributeValueRepository productAttributeValueRepository)
         {
             this._productRepository = productRepository;
             this._productTypeRepository = productTypeRepository;
             this._product_ProductAttributeMappingRepository = product_ProductAttributeMappingRepository;
+            this._productAttributeValueRepository = productAttributeValueRepository;
         }
         #endregion
 
@@ -76,6 +79,11 @@ namespace OS.Services.Serivices
             {
                 return false;
             }
+        }
+
+        public List<ProductAttributeValue> GetProductAttributeValue(int productId)
+        {
+            return _productAttributeValueRepository.GetProductAttributeValues(productId);
         }
     }   
         #endregion 

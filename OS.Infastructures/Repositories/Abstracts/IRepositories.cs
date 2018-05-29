@@ -26,7 +26,10 @@ namespace OS.Infastructures.Repositories.Abstracts
     }
     public interface IProduct_ProductAttributeMappingRepository : IEntityBaseRepository<Product_ProductAttributeMapping> { }
     public interface IProductAttributeRepository : IEntityBaseRepository<ProductAttribute> { }
-    public interface IProductAttributeValueRepository : IEntityBaseRepository<ProductAttributeValue> { }
+    public interface IProductAttributeValueRepository : IEntityBaseRepository<ProductAttributeValue>
+    {
+        List<ProductAttributeValue> GetProductAttributeValues(int id);
+    }
     public interface IProductAttributeCombinationRepository : IEntityBaseRepository<ProductAttributeCombination> { }
     public interface IProductReviewRepository : IEntityBaseRepository<ProductReview> { }
     public interface IProductTypeRepository : IEntityBaseRepository<ProductType> { }

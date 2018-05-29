@@ -104,15 +104,24 @@ namespace OS.Web.Controllers
         public IActionResult GetSingleProduct(int id)
         {
             IActionResult _result = new ObjectResult(false);
-            BaseResponse _productResponse = null;
+            ProductResponse _productResponse = null;
             try
             {
-                var _product = _productService.GetSingleProduct(id);
-                _result = new ObjectResult(_product);
+                var _product = _productService.GetSingleProduct(id).Result;
+                var productAttribute = _productService.GetProductAttributeValue(id);
+
+                _productResponse = new ProductResponse
+                {
+                    Succeeded = true,
+                    // Message = "Successfully variant type selected"
+                    SingleProduct = _product,
+                    AttributeValue = productAttribute
+                };
+                _result = new ObjectResult(_productResponse);
             }
             catch (Exception ex)
             {
-                _productResponse = new BaseResponse
+                _productResponse = new ProductResponse
                 {
                     Succeeded = false,
                     Message = ex.Message
